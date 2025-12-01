@@ -13,7 +13,7 @@ public class Course {
     // private ArrayList<String> studetnIds;
     // private int enrolledStudetnCount;
 
-    public Course(String courseName, String courseCode, String studetnIds, String instructor, String schedule) {
+    public Course(String courseName, String courseCode, String instructor, String schedule) {
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.instructor = instructor;
@@ -30,6 +30,14 @@ public class Course {
     public String getCourseCode() {
         return courseCode;
     }
+    
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public String getSchedule() {
+        return schedule;
+    }
 
     public ArrayList<Assignment> getAssignments() {
         return assignments;
@@ -42,6 +50,8 @@ public class Course {
     public void showInfo() {
         System.out.println(courseCode + " - " + courseName);
         // System.out.println("Enrolled: " + enrolledStudetnCount);
+        System.out.println("Instructor: " + instructor);
+        System.out.println("Schedule: " + schedule);
     }
 
 
