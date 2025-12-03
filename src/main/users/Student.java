@@ -7,22 +7,16 @@ public class Student extends User{
     private String studentId;
     private ArrayList<Course> enrolledCourses;
     private ArrayList<String> enrolledCoursesCode;
-    private int enrolledCoursesCount;
 
     public Student(String name, String studentId, String email, String password) {
         super(name, email, password);
         this.studentId = studentId;
         this.enrolledCourses = new ArrayList<>();
         this.enrolledCoursesCode = new ArrayList<>();
-        this.enrolledCoursesCount = 0;
     }
 
     public String getStudentId() {
         return studentId;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
     }
 
     public ArrayList<Course> getEnrolledCourses() {
@@ -33,12 +27,8 @@ public class Student extends User{
         this.enrolledCourses = enrolledCourses;
     }
 
-    public ArrayList<String> getEnrolledCoursesName() {
+    public ArrayList<String> getEnrolledCoursesCode() {
         return enrolledCoursesCode;
-    }
-
-    public void setEnrolledCoursesName(ArrayList<String> enrolledCoursesName) {
-        this.enrolledCoursesCode = enrolledCoursesName;
     }
 
     public void enrollCourse(String courseName, String courseCode, String instructor, String schedule) {
@@ -54,12 +44,17 @@ public class Student extends User{
 
     @Override
     public void showInfo() {
+        Sout.println("========== Student Info ==========");
         Sout.println("Name: " + getName());
         Sout.println("Student ID: " + this.studentId);
-        for(Course course : enrolledCourses)
-            Sout.print(course.getCourseName() + " ");
-        Sout.println();
         Sout.println("Email: " + getEmail());
+        Sout.println("---------- Courses ----------\n");
+        for(int i=0;i<enrolledCourses.size();i++) {
+            Sout.print("[" + (i+1)+ "] : ");
+            enrolledCourses.get(i).showInfo();
+            Sout.println();
+        }
+        Sout.println("-----------------------------");
     }
 
 }

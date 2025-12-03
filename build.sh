@@ -45,7 +45,7 @@ fi
 # -----------------------------
 # Run Project
 # -----------------------------
-echo "[RUN] Starting application..."
+echo -e "[RUN] Starting application...\n==================================\n"
 java -cp "$BIN_DIR" "$MAIN_CLASS"
 EXIT_CODE=$?
 
