@@ -1,9 +1,10 @@
 package users;
+
 import core.*;
 import helpers.*;
 import java.util.ArrayList;
 
-public class Student extends User{
+public class Student extends User {
     private String studentId;
     private ArrayList<Course> enrolledCourses;
     private ArrayList<String> enrolledCoursesCode;
@@ -13,6 +14,24 @@ public class Student extends User{
         this.studentId = studentId;
         this.enrolledCourses = new ArrayList<>();
         this.enrolledCoursesCode = new ArrayList<>();
+
+        loadEnrolledCourses();
+    }
+
+    private void loadEnrolledCourses() {
+        data.DataManager dm = data.DataManager.getInstance();
+        java.util.List<String> codes = dm.getEnrolledCourseCodes(studentId);
+        java.util.List<Course> allCourses = dm.getCourses();
+
+        for (String code : codes) {
+            for (Course c : allCourses) {
+                if (c.getCourseCode().equals(code)) {
+                    enrolledCourses.add(c);
+                    enrolledCoursesCode.add(code);
+                    break;
+                }
+            }
+        }
     }
 
     public String getStudentId() {
@@ -32,9 +51,14 @@ public class Student extends User{
     }
 
     public void enrollCourse(String courseName, String courseCode, String instructor, String schedule) {
-        Course c = new Course(courseName, courseCode, instructor, schedule);
+        // Only enroll if not already enrolled
         if (!enrolledCoursesCode.contains(courseCode)) {
+            Course c = new Course(courseName, courseCode, instructor, schedule);
             enrolledCourses.add(c);
+            enrolledCoursesCode.add(courseCode);
+
+            // Persist
+            data.DataManager.getInstance().enrollStudent(studentId, courseCode);
         }
     }
 
@@ -49,8 +73,8 @@ public class Student extends User{
         Sout.println("Student ID: " + this.studentId);
         Sout.println("Email: " + getEmail());
         Sout.println("---------- Courses ----------\n");
-        for(int i=0;i<enrolledCourses.size();i++) {
-            Sout.print("[" + (i+1)+ "] : ");
+        for (int i = 0; i < enrolledCourses.size(); i++) {
+            Sout.print("[" + (i + 1) + "] : ");
             enrolledCourses.get(i).showInfo();
             Sout.println();
         }
