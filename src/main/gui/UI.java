@@ -35,7 +35,7 @@ public class UI extends JFrame {
     private final JPanel mainCardPanel = new JPanel(mainLayout);
 
     // =====================================================
-    // ARRAYS USED INSTEAD OF HASHMAP
+    // Arrays of components for split pages
     // Each index belongs to one split page:
     // splitNames[i] = name of split page
     // splitLeftPanels[i] = left panel (menu)

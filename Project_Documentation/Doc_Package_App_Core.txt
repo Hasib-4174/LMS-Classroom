@@ -1,0 +1,42 @@
+# Package: app
+## File: App.java
+This is the main entry point of the application.
+### Methods:
+- **main(String[] args)**:
+    - Creates an instance of `gui.LMSGui`.
+    - This triggers the constructor of `LMSGui` which sets up the interface and makes it visible.
+
+---
+
+# Package: core
+This package contains "Model" classes. These are simple classes that hold data.
+
+## File: Course.java
+Represents a course.
+### Fields:
+- `courseName`, `courseCode`, `instructor`, `schedule`: Strings holding course info.
+- `assignments`: List of assignments (unused in current implementation, assignments are global).
+### Methods:
+- **Course(...)**: Constructor to create a new Course.
+- **getCourseName()**, **getCourseCode()**, etc.: Getters to retrieve data.
+- **showInfo()**: Prints course details to console (for debugging).
+
+## File: Assignment.java
+Represents an assignment.
+### Fields:
+- `name`, `details`: Strings.
+### Methods:
+- **Assignment(name, details)**: Constructor.
+- **getName()**, **getDetails()**: Getters.
+- **showInfo()**: Prints details to console.
+
+## File: Notice.java
+Represents a notice.
+### Fields:
+- `title`, `content`: Strings.
+- `date`: String (Stores date of creation).
+### Methods:
+- **Notice(title, content)**: Constructor (sets date to now).
+- **Notice(title, content, date)**: Constructor for loading from file.
+- **getTitle()**, **getContent()**, **getDate()**: Getters.
+- **showInfo()**: Prints details.

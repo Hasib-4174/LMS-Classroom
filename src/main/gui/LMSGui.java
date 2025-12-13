@@ -10,6 +10,7 @@ import users.Admin;
 import users.User;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,6 @@ public class LMSGui extends UI {
     private JPasswordField signupPassField;
 
     // Dashboard references
-    // Dashboard references
     private JLabel profileNameLabel;
     private JLabel profileIdLabel;
     private JLabel profileEmailLabel;
@@ -39,6 +39,11 @@ public class LMSGui extends UI {
     private JPanel coursesCard;
     private JPanel assignmentsCard;
     private JPanel noticesCard;
+
+    // Table references for selection
+    private JTable coursesTable;
+    private JTable assignmentsTable;
+    private JTable noticesTable;
 
     public LMSGui() {
         super("LMS Classroom", 900, 600);
@@ -208,6 +213,16 @@ public class LMSGui extends UI {
         } else {
             // Admin
             button(coursesTop, "Add Course", 0, 0, 150, 30, this::showAddCoursePopup);
+            button(coursesTop, "Delete Selected", 0, 0, 150, 30, () -> {
+                int row = coursesTable.getSelectedRow();
+                if (row != -1) {
+                    dataManager.deleteCourse(row);
+                    updateDashboard(user);
+                    popup("Course Deleted");
+                } else {
+                    popup("Please select a course to delete");
+                }
+            });
         }
         coursesCard.add(coursesTop, BorderLayout.NORTH);
 
@@ -223,7 +238,20 @@ public class LMSGui extends UI {
                 data[i][2] = c.getInstructor();
                 data[i][3] = c.getSchedule();
             }
-            tableFull(coursesCard, cols, data);
+            // Student view is read-only regarding deletion here (enrollment is managed
+            // elsewhere)
+            // But we can still use member variable or just tableFull.
+            // For consistency let's use member variable but student can't delete anyway.
+            coursesTable = new JTable(new DefaultTableModel(data, cols) {
+                public boolean isCellEditable(int r, int c) {
+                    return false;
+                }
+            });
+            JScrollPane sp = new JScrollPane(coursesTable);
+            applyTheme(sp);
+            applyTheme(coursesTable);
+            coursesCard.add(sp, BorderLayout.CENTER);
+
         } else {
             // Admin View All Courses
             List<Course> courses = dataManager.getCourses();
@@ -236,7 +264,16 @@ public class LMSGui extends UI {
                 data[i][2] = c.getInstructor();
                 data[i][3] = c.getSchedule();
             }
-            tableFull(coursesCard, cols, data);
+
+            coursesTable = new JTable(new DefaultTableModel(data, cols) {
+                public boolean isCellEditable(int r, int c) {
+                    return false;
+                }
+            });
+            JScrollPane sp = new JScrollPane(coursesTable);
+            applyTheme(sp);
+            applyTheme(coursesTable);
+            coursesCard.add(sp, BorderLayout.CENTER);
         }
         coursesCard.revalidate();
         coursesCard.repaint();
@@ -256,6 +293,16 @@ public class LMSGui extends UI {
 
         if (user instanceof Admin) {
             button(top, "Add Assignment", 0, 0, 150, 30, this::showAddAssignmentPopup);
+            button(top, "Delete Selected", 0, 0, 150, 30, () -> {
+                int row = assignmentsTable.getSelectedRow();
+                if (row != -1) {
+                    dataManager.deleteAssignment(row);
+                    updateAssignmentsCard(user);
+                    popup("Assignment Deleted");
+                } else {
+                    popup("Please select an assignment to delete");
+                }
+            });
         }
         assignmentsCard.add(top, BorderLayout.NORTH);
 
@@ -266,7 +313,19 @@ public class LMSGui extends UI {
             data[i][0] = list.get(i).getName();
             data[i][1] = list.get(i).getDetails();
         }
-        tableFull(assignmentsCard, cols, data);
+
+        // Custom table creation
+        DefaultTableModel model = new DefaultTableModel(data, cols) {
+            public boolean isCellEditable(int r, int c) {
+                return false;
+            }
+        };
+        assignmentsTable = new JTable(model);
+        JScrollPane sp = new JScrollPane(assignmentsTable);
+        applyTheme(sp);
+        applyTheme(assignmentsTable);
+
+        assignmentsCard.add(sp, BorderLayout.CENTER);
 
         assignmentsCard.revalidate();
         assignmentsCard.repaint();
@@ -280,6 +339,16 @@ public class LMSGui extends UI {
 
         if (user instanceof Admin) {
             button(top, "Add Notice", 0, 0, 150, 30, this::showAddNoticePopup);
+            button(top, "Delete Selected", 0, 0, 150, 30, () -> {
+                int row = noticesTable.getSelectedRow();
+                if (row != -1) {
+                    dataManager.deleteNotice(row);
+                    updateNoticesCard(user);
+                    popup("Notice Deleted");
+                } else {
+                    popup("Please select a notice to delete");
+                }
+            });
         }
         noticesCard.add(top, BorderLayout.NORTH);
 
@@ -291,7 +360,18 @@ public class LMSGui extends UI {
             data[i][1] = list.get(i).getTitle();
             data[i][2] = list.get(i).getContent();
         }
-        tableFull(noticesCard, cols, data);
+
+        DefaultTableModel model = new DefaultTableModel(data, cols) {
+            public boolean isCellEditable(int r, int c) {
+                return false;
+            }
+        };
+        noticesTable = new JTable(model);
+        JScrollPane sp = new JScrollPane(noticesTable);
+        applyTheme(sp);
+        applyTheme(noticesTable);
+
+        noticesCard.add(sp, BorderLayout.CENTER);
 
         noticesCard.revalidate();
         noticesCard.repaint();

@@ -71,6 +71,13 @@ public class DataManager {
         saveCourses();
     }
 
+    public void deleteCourse(int index) {
+        if (index >= 0 && index < courses.size()) {
+            courses.remove(index);
+            saveCourses();
+        }
+    }
+
     private void saveCourses() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(COURSES_FILE))) {
             for (Course c : courses) {
