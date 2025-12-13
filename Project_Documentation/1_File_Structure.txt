@@ -1,0 +1,40 @@
+# LMS Project File Structure
+
+This document explains the organization of files and folders in the project.
+
+## Root Directory
+- **src/main**: Contains all the source code for the application.
+- **src/main/resources**: Contains data files like images (if any) and CSV files for data storage.
+- **Project_Documentation**: Contains these explanation files.
+
+## Source Code (src/main)
+The source code is organized into packages (folders) to keep related code together:
+
+### 1. app
+- **App.java**: The entry point of the program. This is where the application starts running. It simply creates an instance of `LMSGui`.
+
+### 2. core
+- **Course.java**: Represents a course with code, name, instructor, and schedule.
+- **Assignment.java**: Represents an assignment with a name and details.
+- **Notice.java**: Represents a notice with title, content, and date.
+These classes are "Models" - they just hold data.
+
+### 3. data
+- **DataManager.java**: This is a very important class. It handles saving and loading data to/from CSV files. It follow the "Singleton" pattern, meaning there is only one instance of it running.
+- **UserDataManager.java**: specific implementation for handling User authentication (Login/Signup).
+
+### 4. gui
+- **LMSGui.java**: The main window of the application. It handles all the visual elements (buttons, text fields, tables) and user interactions.
+- **UI.java**: A helper class (Framework) that makes creating the GUI easier. It provides simple methods like `button()`, `label()`, `table()` so we don't have to write complex Swing code every time.
+
+### 5. users
+- **User.java**: The parent class for all users. It has common fields like name, email, password.
+- **Student.java**: Represents a Student user. It extends `User` and adds student-specific features like `enrolledCourses`.
+- **Admin.java**: Represents an Admin user. It extends `User`.
+
+## Data Storage (src/main/resources/data)
+- **courses.csv**: Stores list of all courses.
+- **assignments.csv**: Stores list of assignments.
+- **notices.csv**: Stores list of notices.
+- **enrollments.csv**: Links students to courses (Who is enrolled in what).
+- **users/login.csv**: Stores user credentials.

@@ -49,16 +49,12 @@ More features will be added as development continues.
 
 1.  Give execute permission:
 
-```{=html}
-<!-- -->
-```
+``` bash
     chmod +x build.sh
 
 2.  Build & Run:
 
-```{=html}
-<!-- -->
-```
+``` bash
     ./build.sh
 
 ### 🟦 Windows

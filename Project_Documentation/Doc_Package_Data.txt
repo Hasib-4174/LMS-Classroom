@@ -1,0 +1,40 @@
+# Package: data
+This package handles data storage and persistence.
+
+## File: DataManager.java
+This class manages Courses, Assignments, Notices, and Enrollments persistence. It follows the **Singleton Pattern** (only one instance exists).
+### Fields:
+- `instance`: Static reference to the single DataManager object.
+- `courses`, `assignments`, `notices`: Lists that hold the data in memory.
+- `..._FILE`: Constants for file paths.
+### Methods:
+- **getInstance()**: Returns the single instance of DataManager.
+- **ensureDataDir()**: Creates the data directory if it doesn't exist.
+- **loadCourses()**: Reads `courses.csv` and populates the `courses` list.
+- **saveCourses()**: Writes the `courses` list to `courses.csv`.
+- **addCourse(Course)**: Adds a course to list and saves.
+- **deleteCourse(int index)**: Removes a course by index and saves.
+- **loadAssignments() / saveAssignments()**: Similar logic for assignments.
+- **addAssignment() / deleteAssignment()**: Manage assignments.
+- **loadNotices() / saveNotices()**: Similar logic for notices.
+- **addNotice() / deleteNotice()**: Manage notices.
+- **getEnrolledCourseCodes(String studentId)**: Reads `enrollments.csv` and returns a list of course codes the student is enrolled in.
+- **enrollStudent(String studentId, String courseCode)**: Appends a new line to `enrollments.csv` to save enrollment.
+
+## File: UserDataManager.java
+This class manages User authentication.
+### Fields:
+- `users`: List of all `User` objects loaded.
+### Methods:
+- **UserDataManager()**: Constructor that calls `loadUsers()`.
+- **loadUsers()**: Reads `users/login.csv`.
+    - It parses `ID`, `Email`, `Password`.
+    - If ID is "admin", it creates an `Admin` object.
+    - Otherwise, it creates a `Student` object.
+    - Note: This specific CSV format is strictly followed.
+- **validateUser(String id, String password)**:
+    - Loops through loaded users.
+    - Checks if ID and Password match.
+    - Returns the `User` object if successful, or `null`.
+- **addUser(Student s)**: Adds a new student to memory and calls `saveUserToCsv`.
+- **saveUserToCsv(Student s)**: Appends the new student's credentials to the CSV file.

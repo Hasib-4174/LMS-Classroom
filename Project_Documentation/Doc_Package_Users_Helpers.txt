@@ -1,0 +1,49 @@
+# Package: users
+This package defines the user types.
+
+## File: User.java
+Abstract parent class.
+### Methods:
+- **User(name, email, password)**: Constructor.
+- **getName()**, **getEmail()**, **getPassword()**: Getters.
+- **showInfo()**: Abstract method (must be implemented by children).
+
+## File: Student.java
+Represents a Student. Extends `User`.
+### Fields:
+- `studentId`: The specific ID.
+- `enrolledCourses`: A list of `Course` objects.
+- `enrolledCoursesCode`: A list of strings (IDs).
+### Methods:
+- **Student(...)**: Constructor. Calls `loadEnrolledCourses()`.
+- **loadEnrolledCourses()**: Asks `DataManager` for enrolled codes and matches them to Course objects.
+- **enrollCourse(...)**:
+    - Creates a new Course object locally.
+    - Adds to list.
+    - Persists the enrollment via `DataManager`.
+
+## File: Admin.java
+Represents an Admin. Extends `User`.
+### Methods:
+- **Admin(...)**: Constructor.
+- **showInfo()**: Prints admin details.
+
+---
+
+# Package: helpers
+## File: Sout.java
+A simple utility helper.
+### Methods:
+- **print(String)**: Short for System.out.print.
+- **println(String)**: Short for System.out.println.
+
+---
+
+# Package: auth
+*Note: This package appears to be an older/alternative implementation of login logic, possibly not fully used in the current GUI version which currently relies on `data.UserDataManager`.*
+
+## File: LoginSystem.java
+Handles console-based login interaction.
+### Methods:
+- **performLogin()**: logic for console login.
+- **performSignup()**: logic for console signup.

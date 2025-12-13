@@ -1,5 +1,6 @@
-id,mail,password
-"admin","admin@northsouth.edu","admin12345"
-"2521228042","name252@northsouth.edu","name252@12345"
-"12345","shamim@gmail.com","12345"
-"1222","student@gmail.com","student12345"
+id,mail,password,name
+"admin","admin@northsouth.edu","admin12345","Admin"
+"2521228042","name252@northsouth.edu","name252@12345","Student-252"
+"12345","shamim@gmail.com","12345","Shamim"
+"252123","hasib@gmail.com","hasib","Hasib"
+"222","shamim@123","shamim","Shamim"
